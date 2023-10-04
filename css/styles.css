@@ -62,9 +62,9 @@ h2 {
 
 .meal-instructions {
   color: white;
-  padding: 0 60px;
   text-align: justify;
-  margin-bottom: 30px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .meal-image img {
@@ -75,23 +75,15 @@ h2 {
 
 .meal-content-box {
   margin: 0 200px;
-  overflow: auto;
-  background-color: orange;
+  overflow: hidden;
+  background-color: grey;
   border-radius: 15px;
   padding: 50px 20px 200px 20px;
   position: fixed;
   top: 50px;
   bottom: 20px;
+  box-shadow: 3px 3px 4px #7f8487;
   display: none;
-}
-
-.meal-content-box::-webkit-scrollbar {
-  width: 10px;
-}
-
-.meal-content-box::-webkit-scrollbar-thumb {
-  background: white;
-  border-radius: 30px;
 }
 
 .search-btn {
@@ -174,12 +166,12 @@ h2 {
     position: fixed;
     left: -100px;
     top: 200px;
-    width: 400px;
+    width: 100%;
     padding: 0;
     padding-bottom: 30px;
   }
 
-  .meal-content-box .h3 {
+  .meal-content-box {
     text-align: justify;
   }
 }

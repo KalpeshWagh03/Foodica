@@ -1,32 +1,35 @@
 // Search bar functionality
 
-function getMealName(){
-let food = document.getElementById("search").value.trim();
-console.log(food);
-apiCalled(food)
+function getMealName() {
+  let food = document.getElementById("search").value.trim();
+  console.log(food);
+  apiCalled(food);
 }
 // Press Enter key to search
 
-document.getElementById("search").addEventListener("keypress",function(event){
-  if(event.key == "Enter"){
-    event.preventDefault();
-    document.getElementById("click-btn").click();
-  }
-})
+document
+  .getElementById("search")
+  .addEventListener("keypress", function (event) {
+    if (event.key == "Enter") {
+      event.preventDefault();
+      document.getElementById("click-btn").click();
+    }
+  });
 
 // API calling
 
-function apiCalled(food){
-let html = ""
-fetch("https://www.themealdb.com/api/json/v1/1/filter.php?i="+food+"").then(function(response) {
-  return response.json()
-}).then(function(result) {
+function apiCalled(food) {
+  let html = "";
+  fetch("https://www.themealdb.com/api/json/v1/1/filter.php?i=" + food + "")
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (result) {
+      // Creation of multiple cards
 
-// Creation of multiple cards
-
-  if(result.meals){
-  for (let i=0;i<result.meals.length;i++) {
-    html += `<div class="col-lg-4 col-md-6 col-sm-6 card2">
+      if (result.meals) {
+        for (let i = 0; i < result.meals.length; i++) {
+          html += `<div class="col-lg-4 col-md-6 col-sm-6 card2">
       <div class="card card-single" style="width: 18rem;" data-id = ${result.meals[i].idMeal}>
         <img src="${result.meals[i].strMealThumb}" class="card-img-top" alt="...">
         <div class="card-body">
@@ -35,35 +38,37 @@ fetch("https://www.themealdb.com/api/json/v1/1/filter.php?i="+food+"").then(func
           <a href="#" class="btn btn-primary meal-link" id="recepie-link">Get Recepie</a>
         </div>
       </div>
-    </div>`
-  }
-  document.getElementById("meal-card").innerHTML = html;
-      console.log(result.meals[1]);
-}else{
-  html = `<p class = "no-meals">0 meals found</p>`
-  document.getElementById("meal-card").innerHTML = html;
-}})
+    </div>`;
+        }
+        document.getElementById("meal-card").innerHTML = html;
+        console.log(result.meals[1]);
+      } else {
+        html = `<p class = "no-meals">0 meals found</p>`;
+        document.getElementById("meal-card").innerHTML = html;
+      }
+    });
 }
-
-document.getElementById("meal-card").addEventListener("click",function(event){
-  event.preventDefault();
-  if(event.target.classList.contains("meal-link")){
-    let mealItem = event.target.parentElement.parentElement;
-    let meal_id = mealItem.dataset.id;
-    console.log(meal_id);
-    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal_id}`).then(function(res){
-      return res.json();
-    }).then(function(result){
-      displayInstructions(result);
-        let meal_instruction = result.meals[0].strInstructions;
-
-    })
-  }
-})
-
-
+document
+  .getElementById("meal-card")
+  .addEventListener("click", function (event) {
+    event.preventDefault();
+    if (event.target.classList.contains("meal-link")) {
+      let mealItem = event.target.parentElement.parentElement;
+      let meal_id = mealItem.dataset.id;
+      console.log(meal_id);
+      fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal_id}`)
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (result) {
+          displayInstructions(result);
+          let meal_instruction = result.meals[0].strInstructions;
+        });
+    }
+  });
+let isOpen = false;
 // display meal-instruction box.
-function displayInstructions(result1){
+function displayInstructions(result1) {
   let html = "";
   html = `
   <div class="meal-name">
@@ -73,19 +78,23 @@ function displayInstructions(result1){
     <h3>${result1.meals[0].strCategory}</h3>
   </div>
   <div class="meal-instructions">
-    <h3>${result1.meals[0].strInstructions}</h3>
+    <p>${result1.meals[0].strInstructions}</p>
   </div>
   <div class="meal-image">
     <img src="${result1.meals[0].strMealThumb}" class="card-img-top" alt="...">
   </div>
   <div class="recepie-video">
     <a href="${result1.meals[0].strYoutube}" target = "_blank">Watch Video</a>
-  </div>`
+  </div>`;
   document.getElementById("meal-description").innerHTML = html;
-  document.getElementById("meal-description").parentElement.classList.add("showThis");
+  document
+    .getElementById("meal-description")
+    .parentElement.classList.add("showThis");
 }
-
+// document.getElementById("blur").style.filter = "blur(2px)";
 //Hide meal-instruction box.
-  document.getElementById("closeBox").addEventListener("click",function(){
-    document.getElementById("meal-description").parentElement.classList.remove("showThis");
-  })
+document.getElementById("closeBox").addEventListener("click", function () {
+  document
+    .getElementById("meal-description")
+    .parentElement.classList.remove("showThis");
+});
