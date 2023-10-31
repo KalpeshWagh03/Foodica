@@ -1,6 +1,23 @@
+let timer;
+let timeLeft = 60; 
+
+// Start timer on search
+function startTimer() {
+  timer = setInterval(() => {
+    timeLeft--;
+    document.getElementById('timer').innerText = timeLeft;
+    
+    if(timeLeft <= 0) {
+      clearInterval(timer);
+      alert('Time up!');
+    }
+  }, 1000);
+}
+
 // Search bar functionality
 
 function getMealName(){
+startTimer();
 let food = document.getElementById("search").value.trim();
 console.log(food);
 apiCalled(food)
@@ -113,6 +130,7 @@ function displayInstructions(result1){
 
 //Hide meal-instruction box.
   document.getElementById("closeBox").addEventListener("click",function(){
+    clearInterval(timer);
     document.getElementById("meal-description").parentElement.classList.remove("showThis");
   })
 
