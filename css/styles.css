@@ -1,7 +1,9 @@
 body {
   text-align: center;
 }
-
+*{
+  background-color: #000;
+}
 h1,
 h2 {
   font-weight: 700;
@@ -334,3 +336,4 @@ body::-webkit-scrollbar-thumb {
 .search-result-text {
   margin-bottom: 30px;
 }
+
